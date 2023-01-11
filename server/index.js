@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url'
 
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url)
-const __dirname= path.dirname(__filename)
+const __dirname= path.dirname(__filename) //these two lines write because type="module" is used
 
 dotenv.config()
 const app = express()
@@ -22,7 +22,7 @@ app.use(morgan("common"))
 app.use(bodyParser.json({limit:'30mb',extended:true}))
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}))
 app.use(cors())
-app.use("/assets", express.static(path.json(__dirname,'public/assets')))
+app.use("/assets", express.static(path.join(__dirname,'public/assets')))
 
 
 /*FILE STORAGE */
@@ -36,3 +36,13 @@ const storage = multer.diskStorage({
   })
   
   const upload = multer({storage})
+
+  /*MOONGODB SETUP */
+
+  const PORT = process.env.PORT || 6001
+  mongoose.connect(process.env.MONGO_URL,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+  }).then(
+    app.listen(PORT,()=>console.log(`server run on port http://localhost/${PORT}`))
+  ).catch((error)=>console.log(`${error} did not server run`))
