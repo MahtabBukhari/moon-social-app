@@ -9,6 +9,7 @@ import morgan from 'morgan'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url)
 const __dirname= path.dirname(__filename) //these two lines write because type="module" is used
@@ -36,6 +37,10 @@ const storage = multer.diskStorage({
   })
   
   const upload = multer({storage})
+
+  /* ROUTES*/
+
+  app.post('/auth/register',upload.single('picture'),register)
 
   /*MOONGODB SETUP */
 
