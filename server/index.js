@@ -10,7 +10,8 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { register } from './controllers/auth.js'
-import router from './routes/auth.js'
+import authRouter from './routes/auth.js'
+import userRouter from './routes/user.js'
 
 mongoose.set('strictQuery', true);
 /* CONFIGURATION */
@@ -47,7 +48,8 @@ const storage = multer.diskStorage({
 
   /*routes */
 
-  app.use('/auth',router)
+  app.use('/auth',authRouter)
+  app.use('/user', userRouter)
 
   /*MOONGODB SETUP */
 
